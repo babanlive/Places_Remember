@@ -4,6 +4,7 @@ package-mode = false
 [tool.poetry.dependencies]
 python = "^3.12"
 django = "4.2.13"
+pre-commit = "^3.7.1"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.4.5"
