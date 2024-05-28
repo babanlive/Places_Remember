@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ title_page }} {% endblock %}
+
+{% block content %}
+
+<div class="container my-5">
+        
+    <h1 class="mb-4">Добавить воспоминание</h1>
+    <form id="memory-form" method="post" action="{% url 'places:create' %}">
+        {% csrf_token %}             
+        
+        <div class="form-group">
+            <div class="mb-3">
+                <label for="id_title" class="form-label">Заголовок</label>
+                <input type="text" class="form-control" id="id_title" name="title">
+            </div>
+            <div class="mb-3">
+                <label for="id_comment" class="form-label">Комментарий </label>
+                <textarea class="form-control" id="id_comment" name="comment" rows="3"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="id_locations" class="form-label">Локация</label>
+                <textarea class="form-control" id="id_locations" name="locations" rows="3"></textarea>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </form>
+
+    {% if success_message %}
+    <div class="alert alert-success mt-3">{{ success_message }}</div>
+    {% endif %}
+    {% if error_message %}
+    <div class="alert alert-danger mt-3">{{ error_message }}</div>
+    {% endif %}
+</div>
+</body>
+</html>
+{% endblock %}
