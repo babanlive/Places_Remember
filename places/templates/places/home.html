@@ -18,10 +18,15 @@
                 <div class="card-header">{{ post.title }}</div>
                 <div class="card-body">
                     <p class="card-text">{{ post.comment }}</p>
-                    <div id="map-{{ post.id }}" style="height: 300px;"></div>
+                    <div id="map-{{ post.id }}" style="height: 300px ; width: 100% ;"></div>
                     <script>
                         document.addEventListener("DOMContentLoaded", function() {
-                            var map = L.map('map-{{ post.id }}');
+                            // Извлечение координат из post.locations
+                            var coordinates = "{{ post.locations }}".match(/POINT \(([^)]+)\)/)[1].split(" ");
+                            var lon = parseFloat(coordinates[0]);
+                            var lat = parseFloat(coordinates[1]);
+
+                            var map = L.map('map-{{ post.id }}').setView([lat, lon], 13);
 
                             // Определение слоя карты (например, OpenStreetMap)
                             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -29,10 +34,7 @@
                             }).addTo(map);
 
                             // Добавление метки на карту
-                            var marker = L.marker([{{ post.locations.y }}, {{ post.locations.x }}]).addTo(map);
-
-                            // Центрирование карты на метке
-                            map.setView([{{ post.locations.y }}, {{ post.locations.x }}], 13);
+                            var marker = L.marker([lat, lon]).addTo(map);
                         });
                     </script>
                     <ul class="nav justify-content-end">
