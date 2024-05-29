@@ -18,13 +18,28 @@
                 <div class="card-header">{{ post.title }}</div>
                 <div class="card-body">
                     <p class="card-text">{{ post.comment }}</p>
-                    <p class="card-text"><small class="text-muted">{{ post.locations }}</small></p>
+                    <div id="map-{{ post.id }}" style="height: 300px;"></div>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function() {
+                            var map = L.map('map-{{ post.id }}');
+
+                            // Определение слоя карты (например, OpenStreetMap)
+                            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                                attribution: '&copy; OpenStreetMap contributors'
+                            }).addTo(map);
+
+                            // Добавление метки на карту
+                            var marker = L.marker([{{ post.locations.y }}, {{ post.locations.x }}]).addTo(map);
+
+                            // Центрирование карты на метке
+                            map.setView([{{ post.locations.y }}, {{ post.locations.x }}], 13);
+                        });
+                    </script>
                     <ul class="nav justify-content-end">
                         <li class="nav-item">
-                          <a href="{% url 'places:edit' post.id %}" class="btn btn-primary btn-sm me-2">Редактировать</a>
+                          <a href="{% url 'places:edit' post.id %}" class="btn btn-primary btn-sm me-2 mt-4">Редактировать</a>
                         </li>
                     </ul>
-                    
                 </div>
             </div>
             {% endfor %}
