@@ -1,0 +1,22 @@
+body {
+    background-color: #E9E9E9 !important;
+}
+
+.fixed-carousel {
+    height: 400px;
+    overflow: hidden;
+}
+
+.fixed-carousel .carousel-inner {
+    height: 100%;
+}
+
+.fixed-carousel-img {
+    max-height: 100%;
+    width: auto;
+    object-fit: cover;
+}
+
+.card-links{
+    background-color: #E9E9E9
+}
