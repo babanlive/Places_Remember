@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load leaflet_tags %}
 
 {% block title %} {{ title_page }} {% endblock %}
 
@@ -17,13 +18,30 @@
                 <div class="card-header">{{ post.title }}</div>
                 <div class="card-body">
                     <p class="card-text">{{ post.comment }}</p>
-                    <p class="card-text"><small class="text-muted">{{ post.locations }}</small></p>
+                    <div id="map-{{ post.id }}" style="height: 300px ; width: 100% ;"></div>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function() {
+                            // Извлечение координат из post.locations
+                            var coordinates = "{{ post.locations }}".match(/POINT \(([^)]+)\)/)[1].split(" ");
+                            var lon = parseFloat(coordinates[0]);
+                            var lat = parseFloat(coordinates[1]);
+
+                            var map = L.map('map-{{ post.id }}').setView([lat, lon], 13);
+
+                            // Определение слоя карты (например, OpenStreetMap)
+                            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                                attribution: '&copy; OpenStreetMap contributors'
+                            }).addTo(map);
+
+                            // Добавление метки на карту
+                            var marker = L.marker([lat, lon]).addTo(map);
+                        });
+                    </script>
                     <ul class="nav justify-content-end">
                         <li class="nav-item">
-                          <a href="{% url 'places:edit' post.id %}" class="btn btn-primary btn-sm me-2">Редактировать</a>
+                          <a href="{% url 'places:edit' post.id %}" class="btn btn-primary btn-sm me-2 mt-4">Редактировать</a>
                         </li>
                     </ul>
-                    
                 </div>
             </div>
             {% endfor %}

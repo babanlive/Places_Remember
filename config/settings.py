@@ -7,7 +7,7 @@ SECRET_KEY = 'django-insecure-dvs-&o*b1dru)925uo62l74q=2(w!)rnlz5-33-d&=(416nheo
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -16,14 +16,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # auth
+    'django.contrib.gis',
+    'leaflet',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.mailru',
     'allauth.socialaccount.providers.vk',
-    # apps
     'places',
     'users',
 ]
@@ -36,7 +36,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # Add the account middleware:
     'allauth.account.middleware.AccountMiddleware',
 ]
 
@@ -62,8 +61,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'places',
+        'USER': 'myuser',
+        'PASSWORD': 'mypassword',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -82,7 +85,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-Ru'
 
 TIME_ZONE = 'UTC'
 
@@ -100,8 +103,7 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-
-# social_app/settings.py
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTHENTICATION_BACKENDS = ('allauth.account.auth_backends.AuthenticationBackend',)
 
@@ -112,40 +114,41 @@ LOGOUT_REDIRECT_URL = 'places:home'
 ACCOUNT_LOGOUT_REDIRECT_URL = 'places:home'
 ACCOUNT_LOGOUT_ON_GET = True
 
-SOCIALACCOUNT_FORMS = {
-    'signup': 'users.forms.CustomSignupForm',
-    'login': 'users.forms.CustomLoginForm',
-}
-
-
 SOCIALACCOUNT_PROVIDERS = {
-    "github": {
-        "SCOPE": [
-            "email",
+    'github': {
+        'SCOPE': [
+            'email',
         ],
-        "APP": {
-            "client_id": "Ov23liZMWapJJlmue4Pu",
-            "secret": "9fde05c68d364058147c913fda1de35d043818a9",
-        }
+        'APP': {
+            'client_id': 'Ov23liZMWapJJlmue4Pu',
+            'secret': '9fde05c68d364058147c913fda1de35d043818a9',
+        },
     },
-    "vk": {
-        "SCOPE": [
-            "email",
+    'vk': {
+        'SCOPE': [
+            'email',
         ],
-        "APP": {
-            "client_id": "51931051",
-            "secret": "h3uPJJ3EsX6MwSgJgWrx",
-        }
+        'APP': {
+            'client_id': '51931051',
+            'secret': 'h3uPJJ3EsX6MwSgJgWrx',
+        },
     },
-    "mailru": {
-        "SCOPE": [
-            "email",
+    'mailru': {
+        'SCOPE': [
+            'email',
         ],
-        "APP": {
-            "client_id": "172062da00f7438784ea90b2e0ca631e",
-            "secret": "0e0ff31aad5142dea52ad94948cbe2a0",
-        }
-    }
+        'APP': {
+            'client_id': '172062da00f7438784ea90b2e0ca631e',
+            'secret': '0e0ff31aad5142dea52ad94948cbe2a0',
+        },
+    },
 }
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+LEAFLET_CONFIG = {
+    'DEFAULT_CENTER': (56.002778, 92.854167),
+    'DEFAULT_ZOOM': 10,
+    'MAX_ZOOM': 18,
+    'MIN_ZOOM': 3,
+    'SCALE': 'both',
+    'ATTRIBUTION_PREFIX': 'Leaflet',
+}

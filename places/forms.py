@@ -1,4 +1,5 @@
 from django import forms
+from leaflet.forms.widgets import LeafletWidget
 
 from .models import Place
 
@@ -11,5 +12,5 @@ class PlaceForm(forms.ModelForm):
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'comment': forms.Textarea(attrs={'class': 'form-control'}),
-            'locations': forms.NumberInput(attrs={'class': 'form-control'}),
+            'locations': LeafletWidget(),
         }

@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from django.db import models
+from django.contrib.gis.db import models
 
 
 class Place(models.Model):
@@ -8,7 +8,7 @@ class Place(models.Model):
     )
     title = models.CharField(max_length=150, verbose_name='Заголовок')
     comment = models.TextField(blank=True, verbose_name='Комментарий')
-    locations = models.DecimalField(max_digits=7, decimal_places=5, null=True, blank=True, verbose_name='Координаты')
+    locations = models.PointField(verbose_name='Местоположение')
     time_create = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
     time_update = models.DateTimeField(auto_now=True, verbose_name='Время изменения')
 
