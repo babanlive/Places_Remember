@@ -29,7 +29,7 @@ class CreatePlace(LoginRequiredMixin, CreateView):
     form_class = PlaceForm
     template_name = 'places/add_place.html'
     extra_context = {
-        'title_page': 'Добавление воспоминание',
+        'title_page': 'Добавить воспоминание',
     }
     success_url = reverse_lazy('places:home')
 
@@ -45,6 +45,6 @@ class EditPlace(LoginRequiredMixin, UpdateView):
     form_class = PlaceForm
     template_name = 'places/add_place.html'
     extra_context = {
-        'title_page': 'Редактирование воспоминание',
+        'title_page': 'Редактировать воспоминание',
     }
     success_url = reverse_lazy('places:home')
