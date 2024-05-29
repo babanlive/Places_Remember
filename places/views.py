@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import get_object_or_404
+from django.http import Http404, HttpResponseNotFound
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, TemplateView, UpdateView
 
@@ -48,3 +49,18 @@ class EditPlace(LoginRequiredMixin, UpdateView):
         'title_page': 'Редактировать воспоминание',
     }
     success_url = reverse_lazy('places:home')
+
+
+def page_not_found(request, exception):
+    if isinstance(exception, Http404):
+        # Возвращаем HTTP ответ с кодом 404 и красивым оформлением текста
+        return render(
+            request,
+            '404.html',
+            {
+                'title': 'Страница не найдена',
+                'message': 'К сожалению, мы не можем найти такую страницу.',
+            },
+        )
+
+    return HttpResponseNotFound('<h1>Страница не найдена</h1>')
