@@ -42,17 +42,8 @@ class CreatePlace(LoginRequiredMixin, CreateView):
 class EditPlace(LoginRequiredMixin, UpdateView):
     model = Place
     form_class = PlaceForm
-    template_name = 'places/edit_place.html'
+    template_name = 'places/add_place.html'
     extra_context = {
         'title_page': 'Редактирование Места',
     }
     success_url = reverse_lazy('places:home')
-
-    def get_object(self, queryset=None):
-        post = get_object_or_404(Place, pk=self.kwargs['pk'], user=self.request.user)
-        return post
-
-    def form_valid(self, form):
-        place = form.save(commit=False)
-        place.user = self.request.user
-        return super().form_valid(form)
