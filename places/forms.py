@@ -8,3 +8,8 @@ class PlaceForm(forms.ModelForm):
         model = Place
         fields = ['title', 'comment', 'locations']
 
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'comment': forms.Textarea(attrs={'class': 'form-control'}),
+            'locations': forms.NumberInput(attrs={'class': 'form-control'}),
+        }
