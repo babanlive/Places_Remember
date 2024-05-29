@@ -29,13 +29,14 @@ class CreatePlace(LoginRequiredMixin, CreateView):
     form_class = PlaceForm
     template_name = 'places/add_place.html'
     extra_context = {
-        'title_page': 'Создание Места',
+        'title_page': 'Добавление воспоминание',
     }
     success_url = reverse_lazy('places:home')
 
     def form_valid(self, form):
         place = form.save(commit=False)
         place.user = self.request.user
+        place.save()
         return super().form_valid(form)
 
 
@@ -44,6 +45,6 @@ class EditPlace(LoginRequiredMixin, UpdateView):
     form_class = PlaceForm
     template_name = 'places/add_place.html'
     extra_context = {
-        'title_page': 'Редактирование Места',
+        'title_page': 'Редактирование воспоминание',
     }
     success_url = reverse_lazy('places:home')
