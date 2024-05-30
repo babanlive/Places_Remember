@@ -10,6 +10,7 @@
 
 - Python 3.12
 - Django 5.0.6
+- GDal
 - Postgis
 - Docker (поднимает контейнеры Postgis)
 - Bootstrap 5 / HTML / CSS
@@ -57,15 +58,20 @@ poetry install
 
 5. С помощью Docker Compose запустите контейнеры Postgis:
 
-`docker compose up -d`
-
+```shell
+docker compose up -d`
+```
 6. Примените миграции:
 
-`python manage.py migrate`
+```shell
+poetry run python manage.py migrate`
+```
 
 7. Создайте суперпользователя (для доступа к административной панели):
 
-`python manage.py createsuperuser`
+```shell
+poetry run python manage.py createsuperuser`
+```
 
 8. Запустите сервер разработки:
 
@@ -80,3 +86,5 @@ poetry run python manage.py runserver
 1. По ТЗ требуется вход через vk или mail.ru, но при использовании http://localhost:8000/ удалось реализовать вход только через GitHub
 
 2. Через bootstrap не оформлен код шаблонов входа пользователя систему. (остаются по умолчанию от django-allauth)
+
+3. Не рализованы функции использования `github actions`
