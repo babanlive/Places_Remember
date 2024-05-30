@@ -53,11 +53,11 @@ class EditPlace(LoginRequiredMixin, UpdateView):
 
 def page_not_found(request, exception):
     if isinstance(exception, Http404):
-        # Возвращаем HTTP ответ с кодом 404 и красивым оформлением текста
         return render(
             request,
             '404.html',
             {
+                'title_page': 'Страница не найдена',
                 'title': 'Страница не найдена',
                 'message': 'К сожалению, мы не можем найти такую страницу.',
             },
