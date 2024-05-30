@@ -8,7 +8,7 @@ django = "^5.0.6"
 django-allauth = "^0.63.2"
 oauthlib = "^3.2.2"
 requests-oauthlib = "^2.0.0"
-gdal = "3.8.5"
+gdal = "3.8.4"
 psycopg2-binary = "^2.9.9"
 django-leaflet = "^0.30.0"
 
