@@ -65,7 +65,14 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
-    'default': env.db(),
+    'default': {
+        'ENGINE': env('ENGINE_DB', default='django.contrib.gis.db.backends.postgis'),
+        'NAME': env('POSTGRES_DB', default='postgres'),
+        'USER': env('POSTGRES_USER', default='postgres'),
+        'PASSWORD': env('POSTGRES_PASSWORD', default='postgres'),
+        'HOST': env('POSTGRES_HOST', default='postgres'),
+        'PORT': env('DB_PORT', default='5432'),
+    }
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -97,6 +104,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
