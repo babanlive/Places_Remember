@@ -237,12 +237,12 @@ typing = ["typing-extensions (>=4.8)"]
 
 [[package]]
 name = "gdal"
-version = "3.8.4"
+version = "3.6.2"
 description = "GDAL: Geospatial Data Abstraction Library"
 optional = false
 python-versions = ">=3.6.0"
 files = [
-    {file = "GDAL-3.8.4.tar.gz", hash = "sha256:7c51e0ae7a7ccf43ad9e4bf435176baa9276653dfa16fd167c3632f6e7275207"},
+    {file = "GDAL-3.6.2.tar.gz", hash = "sha256:a167cde1813707d91a938dad1a22f280f5ad28c45980d42e948fb8c59f890f5a"},
 ]
 
 [package.extras]
@@ -606,4 +606,4 @@ test = ["covdefaults (>=2.3)", "coverage (>=7.2.7)", "coverage-enable-subprocess
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "f5744eb9ad1afd15ac093e114f0759c51cfb1cceda9b829f1c157349f5e515eb"
+content-hash = "2aff4e026e443900dbf3f77ba82f87965f030448068e790165e2a7feebc9a1d8"
