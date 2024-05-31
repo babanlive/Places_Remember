@@ -39,6 +39,17 @@ docker-compose -f docker-compose.prod.yaml up --build
 
 3. Откройте браузер и перейдите по адресу `http://localhost:8000/`.
 
+## Cоздать суперпользователя
+
+```shell
+docker exec -it app_django poetry run python manage.py createsuperuser
+```
+
+## Запустить тесты
+```shell
+docker exec -it app_django poetry run python manage.py test
+```
+
 ## Нереализованые функции (TODO)
 
 1. По ТЗ требуется вход через vk или mail.ru, но при использовании http://localhost:8000/ удалось реализовать вход только через GitHub
