@@ -1,0 +1,32 @@
+version: '3.9'
+
+services:
+  db:
+    restart: always
+    container_name: postgres
+    image: postgis/postgis:latest
+    env_file:
+      - config/.env
+    volumes:
+      - /postgres_data:/var/lib/postgresql/data
+    network_mode: host
+
+  web:
+    build:
+      target: dev
+      context: .
+      dockerfile: ./Dockerfile
+    image: on1x/app_dev
+    container_name: app_django
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+    env_file:
+      - config/.env
+    network_mode: host
+    command: ["poetry", "run", "python", "manage.py", "runserver", "0.0.0.0:8000"]
+   
+volumes:
+  postgres_data:
+  
