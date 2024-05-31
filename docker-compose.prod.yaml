@@ -7,9 +7,12 @@ services:
     image: postgis/postgis:latest
     env_file:
       - config/.env
+    environment:
+      - POSTGRES_HOST=db
     volumes:
       - /postgres_data:/var/lib/postgresql/data
-    network_mode: host
+    networks:
+      - db
 
   web:
     build:
@@ -23,14 +26,20 @@ services:
     volumes:
       - .:/app
       - static_volume:/app/staticfiles
-      - media_volume:/app/media
+      - media_volume:/app/mediafiles
     env_file:
       - config/.env
-    network_mode: host
-   
+    environment:
+      - DEBUG=False
+    networks:
+      - db
+    command: ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "4", "--threads", "2", "config.wsgi:application"]
+
 volumes:
   postgres_data:
   static_volume:
   media_volume:
 
+networks:
+  db:
   
