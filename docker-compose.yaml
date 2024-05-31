@@ -1,15 +1,36 @@
-version: "3.9"
-services:
+version: '3.9'
 
+services:
   db:
     restart: always
-    container_name: db_postgis
-    image: postgis/postgis:latest 
-    environment:
-      POSTGRES_USER: myuser
-      POSTGRES_PASSWORD: mypassword
-      POSTGRES_DB: places
+    container_name: postgres
+    image: postgis/postgis:latest
+    env_file:
+      - config/.env
     volumes:
-      - ./postgres_data:/var/lib/postgresql/data
-    ports:
-      - 5432:5432
+      - /postgres_data:/var/lib/postgresql/data
+    network_mode: host
+
+  web:
+    build:
+      target: prod
+      context: .
+      dockerfile: ./Dockerfile
+    image: on1x/app_prod
+    container_name: app_django
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+    env_file:
+      - config/.env
+    network_mode: host
+   
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:
+
+  

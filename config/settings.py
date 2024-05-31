@@ -1,13 +1,18 @@
 from pathlib import Path
 
+import environ
+
+
+env = environ.Env()
+environ.Env.read_env()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-dvs-&o*b1dru)925uo62l74q=2(w!)rnlz5-33-d&=(416nheo'
+SECRET_KEY = env('SECRET_KEY', default='YOUR_SECRET_KEY')
 
-DEBUG = True
+DEBUG = env.bool('DEBUG', default=False)
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'])
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -61,12 +66,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'places',
-        'USER': 'myuser',
-        'PASSWORD': 'mypassword',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': env('ENGINE_DB', default='django.contrib.gis.db.backends.postgis'),
+        'NAME': env('POSTGRES_DB', default='postgres'),
+        'USER': env('POSTGRES_USER', default='postgres'),
+        'PASSWORD': env('POSTGRES_PASSWORD', default='postgres'),
+        'HOST': env('POSTGRES_HOST', default='localhost'),
+        'PORT': env('DB_PORT', default='5432'),
     }
 }
 
@@ -85,7 +90,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = 'ru-Ru'
+LANGUAGE_CODE = 'ru-RU'
 
 TIME_ZONE = 'UTC'
 
@@ -99,6 +104,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -117,32 +123,26 @@ ACCOUNT_LOGOUT_ON_GET = True
 
 SOCIALACCOUNT_PROVIDERS = {
     'github': {
-        'SCOPE': [
-            'email',
-        ],
+        'SCOPE': ['email'],
         'APP': {
-            'client_id': 'Ov23liZMWapJJlmue4Pu',
-            'secret': '9fde05c68d364058147c913fda1de35d043818a9',
-        },
+            'client_id': env('GITHUB_CLIENT_ID'),
+            'secret': env('GITHUB_SECRET'),
+        }
     },
     'vk': {
-        'SCOPE': [
-            'email',
-        ],
+        'SCOPE': ['email'],
         'APP': {
-            'client_id': '51931051',
-            'secret': 'h3uPJJ3EsX6MwSgJgWrx',
-        },
+            'client_id': env('VK_CLIENT_ID'),
+            'secret': env('VK_SECRET'),
+        }
     },
     'mailru': {
-        'SCOPE': [
-            'email',
-        ],
+        'SCOPE': ['email'],
         'APP': {
-            'client_id': '172062da00f7438784ea90b2e0ca631e',
-            'secret': '0e0ff31aad5142dea52ad94948cbe2a0',
-        },
-    },
+            'client_id': env('MAILRU_CLIENT_ID'),
+            'secret': env('MAILRU_SECRET'),
+        }
+    }
 }
 
 LEAFLET_CONFIG = {
