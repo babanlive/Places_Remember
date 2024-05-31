@@ -9,15 +9,14 @@ services:
       - config/.env
     volumes:
       - /postgres_data:/var/lib/postgresql/data
-    networks:
-      - db
+    network_mode: host
 
   web:
     build:
-      target: development
+      target: prod
       context: .
       dockerfile: ./Dockerfile
-    image: on1x/app_development
+    image: on1x/app_prod
     container_name: app_django
     depends_on:
       - db
@@ -27,15 +26,11 @@ services:
       - media_volume:/app/media
     env_file:
       - config/.env
-    networks:
-      - db
-
-    
+    network_mode: host
+   
 volumes:
   postgres_data:
   static_volume:
   media_volume:
 
-networks:
-  db:
   
