@@ -49,17 +49,7 @@ COPY . ./
 COPY poetry.lock pyproject.toml ./
 RUN --mount=type=cache,target=/root/.cache \
     poetry install --no-root  --only main 
-
-################################
-#PRODACTION
-################################
-FROM builder-base as prod
 RUN poetry add gunicorn
 RUN poetry run python manage.py collectstatic --noinput --clear
-
-################################
-#DEVELOPMENT
-################################
-FROM builder-base as dev
-RUN --mount=type=cache,target=/root/.cache \
-    poetry install --no-root
+EXPOSE 8000
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "4", "--threads", "2", "config.wsgi:application"]
