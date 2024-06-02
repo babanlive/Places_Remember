@@ -11,6 +11,7 @@
 - Python 3.12
 - Django 5.0.6
 - GDal
+- Leaflet
 - Postgis
 - Docker (Запуск проекта и базы данных в контерйнере)
 - Bootstrap 5 / HTML / CSS
@@ -24,7 +25,7 @@ git clone git@github.com:babanlive/Places_Remember.git && cd Places_Remember
 ```
 
 2. Создание файла .env
-- Создайте в папке `config` файл `.env` согласно образцу [text](config/.env.example)
+- Создайте в папке `config` файл `.env` согласно образцу [env_example](config/.env.example)
 
 3. Запуск проекта через Docker
 - Для запуска в режиме разработки выполните команду:
@@ -37,7 +38,12 @@ docker-compose -f docker-compose.dev.yaml up --build
 docker-compose -f docker-compose.prod.yaml up --build
 ```
 
-3. Откройте браузер и перейдите по адресу `http://localhost:8000/`.
+4. Выполните миграции 
+```shell
+docker exec -it app_django poetry run python manage.py migrate
+```
+
+5. Откройте браузер и перейдите по адресу http://localhost:8000/.
 
 ## Cоздать суперпользователя
 
