@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.vk',
     'places',
     'users',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
