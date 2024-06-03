@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load allauth account %}
+{% load widget_tweaks %}
+
+{% block title %}
+    {% trans "Sign In" %}
+{% endblock title %}
+
+{% block content %}
+<div class="container text-center my-5">
+    <div class="row justify-content-center my-5 align-items-stretch">
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card rounded bg-light shadow h-100">
+                <div class="card-body d-flex flex-column justify-content-center">
+                    <h4 class="card-title text-dark text-center mb-2">{% trans "Sign In" %}</h4>
+                    {% if not SOCIALACCOUNT_ONLY %}
+                        <p class="text-muted text-center mb-3">
+                            {% blocktranslate %}Если у вас еще нет аккаунта, пожалуйста, сначала <a href="{{ signup_url }}">зарегистрируйтесь</a>.{% endblocktranslate %}
+                        </p>
+                        <form method="post" action="{% url 'account_login' %}" class="needs-validation" novalidate>
+                            {% csrf_token %}
+                            {% for hidden in form.hidden_fields %}
+                                {{ hidden }}
+                            {% endfor %}
+                            <div class="form-floating mb-3">
+                                {% render_field form.login class="form-control" id="floatingLogin" placeholder="Email or Username"|trans %}
+                                <label for="floatingLogin">{% trans "Email or Username" %}</label>
+                            </div>
+                            <div class="form-floating mb-2">
+                                {% render_field form.password class="form-control" id="floatingPassword" placeholder="Password"|trans %}
+                                <label for="floatingPassword">{% trans "Password" %}</label>
+                            </div>
+                            <div class="form-check mb-2 d-flex justify-content-center">
+                                {% render_field form.remember class="form-check-input" id="rememberMe" %}
+                                <label class="form-check-label ms-2" for="rememberMe">{% trans "Remember Me" %}</label>
+                            </div>
+                            
+                            <div class="d-grid mb-2">
+                                <button type="submit" class="btn btn-primary">{% trans "Sign In" %}</button>
+                            </div>
+                            <div class="text-center">
+                                <a href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+                            </div>
+                        </form>
+                    {% endif %}
+
+                    {% if LOGIN_BY_CODE_ENABLED %}
+                        <hr class="my-3">
+                        <h5 class="text-center mb-4">{% trans "Or log in with a code" %}</h5>
+                        <div class="d-grid gap-2">
+                            <a class="btn btn-secondary" href="{{ request_login_code_url }}">{% trans "Send me a login code" %}</a>
+                        </div>
+                    {% endif %}
+
+                    {% if SOCIALACCOUNT_ENABLED %}
+                        <hr class="my-3">
+                        {% include "account/snippets/custom_social_login.html" %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,15 @@
+{% load socialaccount %}
+<div class="d-grid gap-3">
+    <a href="{% provider_login_url 'github' %}" class="btn btn-outline-dark">
+        <i class="fa fa-github fa-fw"></i>
+        <span>Login with GitHub</span>
+    </a>
+    <a href="{% provider_login_url 'vk' %}" class="btn btn-outline-dark">
+        <i class="fa fa-vk fa-fw"></i>
+        <span>Войти через ВКонтакте</span>
+    </a>
+    <a href="{% provider_login_url 'mailru' %}" class="btn btn-outline-dark">
+        <i class="fa fa-envelope-o fa-fw"></i>
+        <span>Войти через Mail.Ru</span>
+    </a>
+</div>
